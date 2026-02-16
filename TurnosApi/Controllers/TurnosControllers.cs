@@ -65,6 +65,25 @@ namespace TurnosApi.Controllers
         }
 
 
+        [HttpPut ("{id}")]
+
+        public IActionResult Actualizar(int id, [FromBody] Turno turno)
+        {
+            if(id != turno.Id)
+            {
+                return BadRequest();
+            }
+
+            _turnoService.ActualizarTurno(turno);
+            return NoContent();
+
+        }
+
+
+
+
+
+
 
     }
 }

@@ -16,8 +16,8 @@ builder.Services.AddSwaggerGen();
 
 
 //inyeccion de dependecias
-builder.Services.AddScoped<ITurnoRepository, TurnoRepository>();
-builder.Services.AddScoped<TurnoService>();
+builder.Services.AddSingleton<ITurnoRepository, TurnoRepository>();
+builder.Services.AddSingleton<TurnoService>();
 
 
 var app = builder.Build();
