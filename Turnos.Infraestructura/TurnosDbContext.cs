@@ -9,7 +9,7 @@ using Turnos.Domain.Entities;
 
 namespace Turnos.Infraestructura
 {
-    internal class TurnosDbContext : DbContext
+    public class TurnosDbContext : DbContext
     {
 
         public TurnosDbContext(DbContextOptions<TurnosDbContext> options) :base (options)
@@ -17,8 +17,9 @@ namespace Turnos.Infraestructura
 
         }
 
-        public DbSet<Turno>  turnos { get; set; }
+        public DbSet<Turno>  Turno { get; set; }
 
+        public DbSet<Turno> Pacientes { get; set; }
 
 
 

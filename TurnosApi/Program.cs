@@ -1,11 +1,19 @@
 using Turnos.Application.Services;
 using Turnos.Domain.Interface;
 using Turnos.Infraestructura.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Turnos.Infraestructura;
 
 
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<TurnosDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+
+
 
 // Add services to the container.
 
@@ -16,8 +24,10 @@ builder.Services.AddSwaggerGen();
 
 
 //inyeccion de dependecias
-builder.Services.AddSingleton<ITurnoRepository, TurnoRepository>();
-builder.Services.AddSingleton<TurnoService>();
+builder.Services.AddScoped<ITurnoRepository, TurnoRepository>();
+builder.Services.AddScoped<TurnoService>();
+
+
 
 
 var app = builder.Build();
