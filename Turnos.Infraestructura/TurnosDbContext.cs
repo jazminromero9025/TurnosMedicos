@@ -19,7 +19,7 @@ namespace Turnos.Infraestructura
 
         public DbSet<Turno>  Turno { get; set; }
 
-        public DbSet<Turno> Pacientes { get; set; }
+        public DbSet<Paciente> Pacientes { get; set; }
 
 
 
