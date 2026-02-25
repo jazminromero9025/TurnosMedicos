@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Turnos.Domain.Entities
 {
-    internal class Especialidad
+    public class Especialidad
     {
         public string Name { get; set; }
         public int Id { get; set; }

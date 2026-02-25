@@ -6,16 +6,30 @@ using System.Threading.Tasks;
 
 namespace Turnos.Domain.Entities
 {
-    internal class Medico
+    public class Medico
     {
-        public string Name { get; set; }
+       
         public int Id { get; set; }
+        public string Name { get; set; }
 
-        public Medico(string name,int id)
+        public string Apellido { get; set; }
+
+        public int Especialidad { get;  set; }
+
+
+
+        public Medico(string name,int id, string apellido, int especialidad)
         {
             this.Name = name;
             this.Id = id;
+            this.Apellido = apellido;
+            this.Especialidad = especialidad; 
+
         }
+
+
+
+
 
         public Medico()
         {

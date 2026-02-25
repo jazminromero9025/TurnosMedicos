@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Turnos.Application.Services;
 using Turnos.Domain.Entities;
 using Turnos.Infraestructura;
-
+using Turnos.Infraestructura.Repositories;
+using Turnos.Application.Services;
 
 
 namespace TurnosApi.Controllers
@@ -13,19 +15,19 @@ namespace TurnosApi.Controllers
 
     public class PacienteControllers : ControllerBase
     {
-        private readonly TurnosDbContext _context;
+        private readonly PacienteService _pacienteService;
 
-        public PacienteControllers(TurnosDbContext context)
+        public PacienteControllers(PacienteService paciente)
         {
-            this._context = context;
+            this._pacienteService = paciente;
         }
 
 
         //GET: API Paciente
         [HttpGet]
-        public ActionResult Paciente()
+        public async Task<ActionResult> ObtenerTodos()
         {
-            var paciente = _context.Pacientes.ToList();
+            var paciente = await _pacienteService.ObtenerTodos();
             return Ok(paciente);
         }
 
@@ -33,9 +35,9 @@ namespace TurnosApi.Controllers
 
         //Get: Api id
         [HttpGet("{Id)}"]
-        public IActionResult GetbyId (int id)
+        public async Task<IActionResult> ObtenerPorId (int id)
         {
-            var paciente = _context.Pacientes.Find(id);
+            var paciente = await _pacienteService.ObtenerPorId(id);
             if(paciente == null)
             {
                 return NotFound();
@@ -47,26 +49,18 @@ namespace TurnosApi.Controllers
         //Post: Api paciente
         [HttpPost]
 
-        public IActionResult Post(Paciente paciente)
+        public async Task<IActionResult> Crear(Paciente paciente)
         {
 
-            _context.Pacientes.Add(paciente);
-            _context.SaveChanges();
+            _pacienteService.CrearPaciente(paciente);
             return Ok(paciente);
         }
 
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Elimiar(int id)
         {
-            var paciente = _context.Pacientes.Find(id);
-            if(paciente == null)
-            {
-                return NotFound();
-            }
-
-            _context.Pacientes.Remove(paciente);
-            _context.SaveChanges();
+            await _pacienteService.EliminarPaciente(id);
             return NoContent();
 
 

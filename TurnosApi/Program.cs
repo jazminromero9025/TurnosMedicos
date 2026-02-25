@@ -3,6 +3,7 @@ using Turnos.Domain.Interface;
 using Turnos.Infraestructura.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Turnos.Infraestructura;
+using Turnos.Infraestructura.Repositories;
 
 
 
@@ -12,13 +13,16 @@ builder.Services.AddDbContext<TurnosDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+
+
 
 
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -27,6 +31,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITurnoRepository, TurnoRepository>();
 builder.Services.AddScoped<TurnoService>();
 
+builder.Services.AddScoped<PacienteService>();
 
 
 
@@ -46,3 +51,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

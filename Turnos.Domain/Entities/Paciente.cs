@@ -11,11 +11,26 @@ namespace Turnos.Domain.Entities
     {
         public int Id { get; set; }
         public string Name { get;  set; }
+        public string Apellido { get; set; }
 
-        public Paciente(int Id, string name)
+        public string Dni { get; set; }
+
+        public string Telefono { get; set; }
+
+        public string Email { get; set; }
+
+
+
+
+
+        public Paciente(int Id, string name, string apellido, string dni, string telefono, string email)
         {
             this.Id = Id;
             this.Name = name;
+            this.Apellido = apellido;
+            this.Dni = dni;
+            this.Telefono = telefono;
+            this.Email = email;
         }
 
         public Paciente()
