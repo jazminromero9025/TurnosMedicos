@@ -18,6 +18,18 @@ builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 
 
 
+builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
+builder.Services.AddScoped<IMedicoService, MedicoService>();
+
+
+
+
+
+
+
+
+
+
 
 // Add services to the container.
 

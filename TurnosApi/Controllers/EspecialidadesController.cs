@@ -12,11 +12,11 @@ namespace TurnosApi.Controllers
     [ApiController]
     [Route("api/[Controller]")]
 
-    public class EspecialidadesControllers : ControllerBase
+    public class EspecialidadesController : ControllerBase
     {
         private readonly TurnosDbContext _context;
 
-        public EspecialidadesControllers(TurnosDbContext context)
+        public EspecialidadesController(TurnosDbContext context)
         {
             _context = context;
         }
@@ -25,14 +25,14 @@ namespace TurnosApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Especialidad>> GetEspecialidades()
         {
-            return _context.Especialidades.ToList();
+            return _context.Especialidad.ToList();
 
         }
 
         [HttpGet("{id}")]
         public ActionResult<Especialidad> GetEspecialidad(int id)
         {
-            var especialidad = _context.Especialidades.Find(id);
+            var especialidad = _context.Especialidad.Find(id);
             if(especialidad == null)
             {
                 return NotFound();
@@ -46,7 +46,7 @@ namespace TurnosApi.Controllers
         [HttpPost] //agregar
         public ActionResult PostEspecialidad(Especialidad especialidad)
         {
-            _context.Especialidades.Add(especialidad);
+            _context.Especialidad.Add(especialidad);
             _context.SaveChanges();
             return Ok();
         }
@@ -55,13 +55,13 @@ namespace TurnosApi.Controllers
         [HttpPut]
         public ActionResult PutEspecialidad(int id, Especialidad especialidadActualizada)
         {
-            var especialidad = _context.Especialidades.Find(id);
+            var especialidad = _context.Especialidad.Find(id);
             if(especialidad == null)
             {
                 return NotFound();
             }
 
-            especialidad.Name = especialidadActualizada.Name;
+            especialidad.Nombre = especialidadActualizada.Nombre;
             _context.SaveChanges();
             return Ok();
 
@@ -72,13 +72,13 @@ namespace TurnosApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteEspecialidad(int id)
         {
-            var especialidad = _context.Especialidades.Find(id);
+            var especialidad = _context.Especialidad.Find(id);
             if(especialidad == null)
             {
                 return NotFound();
             }
 
-            _context.Especialidades.Remove(especialidad);
+            _context.Especialidad.Remove(especialidad);
             _context.SaveChanges();
             return Ok();
 

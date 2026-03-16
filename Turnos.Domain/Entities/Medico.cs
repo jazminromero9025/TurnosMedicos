@@ -10,20 +10,19 @@ namespace Turnos.Domain.Entities
     {
        
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Nombre { get; set; } = null!;
 
-        public string Apellido { get; set; }
+        public string Apellido { get; set; } = null!;
 
-        public int Especialidad { get;  set; }
+        public int EspecialidadId { get; set; }
 
+        public Especialidad? Especialidad { get; set; } = null!;
 
-
-        public Medico(string name,int id, string apellido, int especialidad)
+        public Medico(string nombre, string apellido, int especialidad)
         {
-            this.Name = name;
-            this.Id = id;
+            this.Nombre= nombre;
             this.Apellido = apellido;
-            this.Especialidad = especialidad; 
+            this.EspecialidadId = especialidad; 
 
         }
 

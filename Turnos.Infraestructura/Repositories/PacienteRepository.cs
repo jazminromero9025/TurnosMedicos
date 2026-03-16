@@ -20,30 +20,31 @@ namespace Turnos.Infraestructura.Repositories
 
         public async Task AgregarPaciente(Paciente paciente)
         {
-            await _context.Pacientes.AddAsync(paciente);
+            await _context.Paciente.AddAsync(paciente);
             await _context.SaveChangesAsync();
         }
 
         public async Task<Paciente> ObtenerPorId(int id)
         {
 
-            return await _context.Pacientes.FindAsync(id);
+            return await _context.Paciente.FindAsync(id);
         }
 
         public async Task<List<Paciente>> ObtenerTodos()
         {
-            return await _context.Pacientes.ToListAsync();
+            return await _context.Paciente.ToListAsync();
         }
 
         public async Task EliminarPaciente(int id)
         {
-            var paciente = await _context.Pacientes.FindAsync(id);
+            var paciente = await _context.Paciente.FindAsync(id);
 
-            if(paciente == null)
+            if(paciente !=null)
             {
-                _context.Pacientes.Remove(paciente);
+                _context.Paciente.Remove(paciente);
                 await _context.SaveChangesAsync();
             }
+
 
         }
 

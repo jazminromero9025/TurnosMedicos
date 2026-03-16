@@ -11,13 +11,14 @@ namespace TurnosApi.Controllers
 {
 
     [ApiController]
-    [Route("api/[Controller]")]
+ 
+    [Route("api/[controller]")]
 
-    public class PacienteControllers : ControllerBase
+    public class PacienteController : ControllerBase
     {
         private readonly PacienteService _pacienteService;
 
-        public PacienteControllers(PacienteService paciente)
+        public PacienteController(PacienteService paciente)
         {
             this._pacienteService = paciente;
         }
@@ -34,7 +35,7 @@ namespace TurnosApi.Controllers
 
 
         //Get: Api id
-        [HttpGet("{Id)}"]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ObtenerPorId (int id)
         {
             var paciente = await _pacienteService.ObtenerPorId(id);
@@ -52,12 +53,12 @@ namespace TurnosApi.Controllers
         public async Task<IActionResult> Crear(Paciente paciente)
         {
 
-            _pacienteService.CrearPaciente(paciente);
+            await _pacienteService.CrearPaciente(paciente);
             return Ok(paciente);
         }
 
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Elimiar(int id)
         {
             await _pacienteService.EliminarPaciente(id);

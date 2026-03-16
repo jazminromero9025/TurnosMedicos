@@ -20,14 +20,13 @@ namespace Turnos.Infraestructura
 
         public DbSet<Turno>  Turno { get; set; }
 
-        public DbSet<Paciente> Pacientes { get; set; }
+        public DbSet<Paciente> Paciente { get; set; }
 
-        public DbSet<Medico> Medicos { get; set; }
+        public DbSet<Medico> Medico { get; set; }
 
-        public DbSet<Especialidad> Especialidades { get; set; }
+        public DbSet<Especialidad> Especialidad { get; set; }
 
-
-
+       
 
 
 

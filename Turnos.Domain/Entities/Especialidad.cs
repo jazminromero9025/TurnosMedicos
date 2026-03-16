@@ -8,12 +8,13 @@ namespace Turnos.Domain.Entities
 {
     public class Especialidad
     {
-        public string Name { get; set; }
+        
         public int Id { get; set; }
 
-        public Especialidad(string name, int id)
+        public string Nombre { get; set; }
+        public Especialidad(string nombre, int id)
         {
-            this.Name = name;
+            this.Nombre = nombre;
             this.Id = id;
 
         }

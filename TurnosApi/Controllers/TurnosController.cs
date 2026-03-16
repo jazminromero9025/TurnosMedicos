@@ -10,12 +10,12 @@ namespace TurnosApi.Controllers
     [Route("api/[Controller]")]
 
 
-    public class TurnosControllers : ControllerBase
+    public class TurnosController : ControllerBase
     {
 
         private readonly TurnoService _turnoService;
 
-        public TurnosControllers(TurnoService turnoService)
+        public TurnosController(TurnoService turnoService)
         {
             this._turnoService = turnoService;
         }
