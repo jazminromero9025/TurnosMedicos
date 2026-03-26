@@ -4,6 +4,7 @@ using Turnos.Infraestructura.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Turnos.Infraestructura;
 using Turnos.Infraestructura.Repositories;
+using Turnos.Infraestructura.Repositories;
 
 
 
@@ -23,7 +24,8 @@ builder.Services.AddScoped<IMedicoService, MedicoService>();
 
 
 
-
+builder.Services.AddScoped<IEspecialidadService, EspecialidadService>();
+builder.Services.AddScoped<IEspecialidadRepository, EspecialidadRepository>();
 
 
 

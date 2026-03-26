@@ -3,6 +3,7 @@ using Turnos.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Turnos.Domain.Interface;
 
 
 namespace TurnosApi.Controllers
@@ -14,79 +15,75 @@ namespace TurnosApi.Controllers
 
     public class EspecialidadesController : ControllerBase
     {
-        private readonly TurnosDbContext _context;
+        private readonly IEspecialidadService _EspecialidadService;
 
-        public EspecialidadesController(TurnosDbContext context)
+        public EspecialidadesController(IEspecialidadService _EspecialidadService)
         {
-            _context = context;
+            this._EspecialidadService = _EspecialidadService;
         }
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<Especialidad>> GetEspecialidades()
+        public async Task<ActionResult<IEnumerable<Especialidad>>> GetEspecialidades()
         {
-            return _context.Especialidad.ToList();
+            var especialidades = await _EspecialidadService.ObtenerTodas();
+            return Ok(especialidades);
 
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Especialidad> GetEspecialidad(int id)
+        public async Task<ActionResult<Especialidad>> GetEspecialidadId(int id)
         {
-            var especialidad = _context.Especialidad.Find(id);
-            if(especialidad == null)
+            var especialidad = await _EspecialidadService.ObtenerPorId(id);
+
+            if (especialidad == null)
             {
                 return NotFound();
             }
 
-            return especialidad;
+            return Ok(especialidad);
         }
+        
 
 
 
         [HttpPost] //agregar
-        public ActionResult PostEspecialidad(Especialidad especialidad)
+        public async Task<ActionResult> PostEspecialidad(Especialidad especialidad)
         {
-            _context.Especialidad.Add(especialidad);
-            _context.SaveChanges();
+            await _EspecialidadService.CrearEspecialidad(especialidad);
             return Ok();
         }
 
-
-        [HttpPut]
-        public ActionResult PutEspecialidad(int id, Especialidad especialidadActualizada)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutEspecialidad(int id, Especialidad especialidadActualizada)
         {
-            var especialidad = _context.Especialidad.Find(id);
-            if(especialidad == null)
+            var existente = await _EspecialidadService.ObtenerPorId(id);
+
+            if (existente == null)
             {
                 return NotFound();
             }
 
-            especialidad.Nombre = especialidadActualizada.Nombre;
-            _context.SaveChanges();
+            await _EspecialidadService.ActualizarEspecialidad(id, especialidadActualizada);
+
             return Ok();
-
-
         }
 
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteEspecialidad(int id)
+        public async Task<ActionResult> DeleteEspecialidad(int id)
         {
-            var especialidad = _context.Especialidad.Find(id);
-            if(especialidad == null)
+            var especialidad = await _EspecialidadService.ObtenerPorId(id);
+
+            if (especialidad == null)
             {
                 return NotFound();
             }
 
-            _context.Especialidad.Remove(especialidad);
-            _context.SaveChanges();
+            await _EspecialidadService.EliminarEspecialidad(id);
+
             return Ok();
-
-
-
-
         }
-
 
 
 
