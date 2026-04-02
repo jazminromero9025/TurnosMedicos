@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Turnos.Application.Services;
 using Turnos.Domain.Entities;
+using Turnos.Domain.Interface;
 
 
 
@@ -13,9 +14,9 @@ namespace TurnosApi.Controllers
     public class TurnosController : ControllerBase
     {
 
-        private readonly TurnoService _turnoService;
+        private readonly ITurnoService _turnoService;
 
-        public TurnosController(TurnoService turnoService)
+        public TurnosController(ITurnoService turnoService)
         {
             this._turnoService = turnoService;
         }
@@ -50,19 +51,18 @@ namespace TurnosApi.Controllers
         [HttpPost]
         public IActionResult Crear([FromBody] Turno turno)
         {
-            _turnoService.CrearTurno(turno);
-            return Ok();
+            try
+            {
+                _turnoService.CrearTurno(turno);
+                return CreatedAtAction(nameof(ObtenerPorId), new { id = turno.Id }, turno);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
-        [HttpDelete("{id}")]
-
-        public IActionResult Eliminar(int id)
-        {
-            _turnoService.EliminarTurno(id);
-            return NoContent();
-
-        }
 
 
         [HttpPut ("{id}")]
@@ -80,7 +80,19 @@ namespace TurnosApi.Controllers
         }
 
 
-
+        [HttpDelete("{id}")]
+        public IActionResult Eliminar(int id)
+        {
+            try
+            {
+                _turnoService.EliminarTurno(id);
+                return NoContent(); // 204
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
 
 
 

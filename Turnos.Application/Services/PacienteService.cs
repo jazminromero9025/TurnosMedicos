@@ -8,7 +8,7 @@ using Turnos.Domain.Entities;
 
 namespace Turnos.Application.Services
 {
-    public class PacienteService
+    public class PacienteService : IPacienteService
     {
 
         private readonly IPacienteRepository _pacienteRepository;
@@ -20,6 +20,10 @@ namespace Turnos.Application.Services
 
         public async Task CrearPaciente(Paciente paciente)
         {
+            if (string.IsNullOrEmpty(paciente.Nombre))
+                throw new Exception("El nombre es obligatorio");
+
+
             //aca podriamos poner validaciones de negocio
             await _pacienteRepository.AgregarPaciente(paciente);
 

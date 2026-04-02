@@ -5,6 +5,7 @@ using Turnos.Domain.Entities;
 using Turnos.Infraestructura;
 using Turnos.Infraestructura.Repositories;
 using Turnos.Application.Services;
+using Turnos.Domain.Interface;
 
 
 namespace TurnosApi.Controllers
@@ -16,9 +17,9 @@ namespace TurnosApi.Controllers
 
     public class PacienteController : ControllerBase
     {
-        private readonly PacienteService _pacienteService;
+        private readonly IPacienteService _pacienteService;
 
-        public PacienteController(PacienteService paciente)
+        public PacienteController(IPacienteService paciente)
         {
             this._pacienteService = paciente;
         }
@@ -54,12 +55,12 @@ namespace TurnosApi.Controllers
         {
 
             await _pacienteService.CrearPaciente(paciente);
-            return Ok(paciente);
+            return CreatedAtAction(nameof(ObtenerPorId), new { id = paciente.Id }, paciente);
         }
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Elimiar(int id)
+        public async Task<IActionResult> Eliminar(int id)
         {
             await _pacienteService.EliminarPaciente(id);
             return NoContent();

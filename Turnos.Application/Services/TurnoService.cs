@@ -8,7 +8,7 @@ using Turnos.Domain.Interface;
 
 namespace Turnos.Application.Services
 {
-    public class TurnoService
+    public class TurnoService :ITurnoService
     {
         private readonly ITurnoRepository _TurnoRepository;
 
@@ -17,13 +17,20 @@ namespace Turnos.Application.Services
             this._TurnoRepository = turnoRepository;
         }
 
-
         public void CrearTurno(Turno turno)
         {
+            var turnos = _TurnoRepository.Lista();
+
+            bool existe = turnos.Any(t =>
+                t.MedicoId == turno.MedicoId &&
+                t.FechaHora == turno.FechaHora);
+
+            if (existe)
+                throw new Exception("El turno ya existe para ese médico en ese horario");
 
             _TurnoRepository.Crear(turno);
-
         }
+
 
 
         public Turno ObtenerPorId(int id)
@@ -47,11 +54,11 @@ namespace Turnos.Application.Services
         public void EliminarTurno(int id)
         {
             var turno = _TurnoRepository.ObtenerPorId(id);
-            if(turno != null)
-            {
-                _TurnoRepository.Eliminar(turno);
 
-            }
+            if (turno == null)
+                throw new Exception("Turno no encontrado");
+
+            _TurnoRepository.Eliminar(turno);
         }
     }
 }
