@@ -36,7 +36,7 @@ namespace Turnos.Infraestructura.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Especialidad");
+                    b.ToTable("Especialidad", (string)null);
                 });
 
             modelBuilder.Entity("Turnos.Domain.Entities.Medico", b =>
@@ -62,7 +62,7 @@ namespace Turnos.Infraestructura.Migrations
 
                     b.HasIndex("EspecialidadId");
 
-                    b.ToTable("Medicos");
+                    b.ToTable("Medicos", (string)null);
                 });
 
             modelBuilder.Entity("Turnos.Domain.Entities.Paciente", b =>
@@ -94,7 +94,7 @@ namespace Turnos.Infraestructura.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Paciente");
+                    b.ToTable("Paciente", (string)null);
                 });
 
             modelBuilder.Entity("Turnos.Domain.Entities.Turno", b =>
@@ -123,7 +123,7 @@ namespace Turnos.Infraestructura.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Turno");
+                    b.ToTable("Turno", (string)null);
                 });
 
             modelBuilder.Entity("Turnos.Domain.Entities.Medico", b =>

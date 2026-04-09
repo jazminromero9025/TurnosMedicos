@@ -1,8 +1,9 @@
-﻿using Turnos.Application.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using Turnos.Application.Services;
+using Turnos.Domain.Entities;
 using Turnos.Domain.Interface;
 using Turnos.Infraestructura;
 using Turnos.Infraestructura.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,26 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<TurnosDbContext>();
+
+    if (!context.Especialidad.Any())
+    {
+        context.Especialidad.AddRange(
+            new Especialidad { Nombre = "Clinica" },
+            new Especialidad { Nombre = "Dermatologia" },
+            new Especialidad { Nombre = "Cirugia" }
+        );
+
+        context.SaveChanges();
+    }
+}
+
+
+
+
 
 // 🔥 Swagger
 if (app.Environment.IsDevelopment())

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Hospital Salud+</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: #f4f6f8;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #4CAF50;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.navbar h1 {
+    margin: 0;
+}
+
+.navbar div button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    border: none;
+    background: white;
+    color: #4CAF50;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.navbar div button:hover {
+    background: #e8f5e9;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 50px;
+    background: linear-gradient(to right, #dff5e1, #c8ebd1);
+}
+
+.hero h2 {
+    color: #2e7d32;
+}
+
+.hero img {
+    width: 300px;
+    margin-top: 20px;
+}
+
+/* SECCIONES */
+.secciones {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    width: 250px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.card h3 {
+    color: #388e3c;
+}
+
+.card button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    background: #4CAF50;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background: #43a047;
+}
+
+/* FOOTER */
+.footer {
+    background: #2e7d32;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h1>Hospital Salud+</h1>
+    <div>
+        <button>Inicio</button>
+        <button>Contacto</button>
+        <button>Especialidades</button>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h2>Bienvenido a nuestro hospital</h2>
+    <p>Atención médica de calidad para vos y tu familia</p>
+
+    <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png">
+</div>
+
+<!-- SECCIONES -->
+<div class="secciones">
+
+    <div class="card">
+        <h3>Pedir Turno</h3>
+        <p>Solicitá tu turno online fácilmente</p>
+        <button onclick="irATurnos()">Ir</button>
+    </div>
+
+    <div class="card">
+        <h3>Especialidades</h3>
+        <p>Conocé nuestras áreas médicas</p>
+        <button>Ver</button>
+    </div>
+
+    <div class="card">
+        <h3>Contacto</h3>
+        <p>Comunicate con nosotros</p>
+        <button>Llamar</button>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 Hospital Salud+ - Todos los derechos reservados
+</div>
+
+<script>
+function irATurnos() {
+    window.location.href = "usuario.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedir Turno</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #dff5e1, #c8ebd1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 320px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #43a047;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Pedir Turno</h2>
+
+    <input id="pacienteId" placeholder="Tu ID (ej: 1)">
+    <input id="medicoId" placeholder="Médico (ej: 1)">
+    <input id="especialidadId" placeholder="Especialidad (ej: 1)">
+    <input id="fechaHora" type="datetime-local">
+
+    <button onclick="crearTurno()">Confirmar Turno</button>
+    <button onclick="volver()">Volver</button>
+</div>
+
+<script>
+const url = "https://localhost:7151/api/Turnos";
+
+async function crearTurno() {
+    try {
+        const turno = {
+            pacienteId: parseInt(document.getElementById("pacienteId").value),
+            medicoId: parseInt(document.getElementById("medicoId").value),
+            especialidadId: parseInt(document.getElementById("especialidadId").value),
+            fechaHora: document.getElementById("fechaHora").value,
+            estado: "Pendiente"
+        };
+
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(turno)
+        });
+
+        if (!res.ok) throw new Error("Error al crear turno");
+
+        alert("Turno solicitado correctamente 🏥");
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+function volver() {
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

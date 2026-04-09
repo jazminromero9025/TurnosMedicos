@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Turnos Médicos</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #dff5e1, #c8ebd1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 300px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #388e3c;
+        }
+
+        input, button {
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #43a047;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            background: #f9f9f9;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .btn-cargar {
+            margin-top: 25px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Turnos Médicos</h1>
+
+<div class="container">
+
+    <!-- LISTA -->
+    
+
+    <!-- FORM -->
+    <div class="card">
+        <h2>Crear Turno</h2>
+
+        <input id="pacienteId" placeholder="Paciente ID">
+        <input id="medicoId" placeholder="Medico ID">
+        <input id="especialidadId" placeholder="Especialidad ID">
+        <input id="fechaHora" type="datetime-local">
+        <input id="estado" placeholder="Estado">
+
+        <button onclick="crearTurno()">Crear Turno</button>
+    </div>
+
+</div>
+
+<!-- BOTÓN ABAJO DE TODO -->
+<button onclick="cargarTurnos()" class="btn-cargar">
+    Cargar Turnos
+</button>
+
+<script>
+const url = "https://localhost:7151/api/Turnos";
+
+async function cargarTurnos() {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Error al cargar turnos");
+
+        const data = await res.json();
+
+        const lista = document.getElementById("listaTurnos");
+        lista.innerHTML = "";
+
+        data.forEach(t => {
+            const li = document.createElement("li");
+
+            const fecha = new Date(t.fechaHora).toLocaleString();
+
+            li.innerHTML = `
+                <strong>ID:</strong> ${t.id}<br>
+                Paciente: ${t.pacienteId}<br>
+                Médico: ${t.medicoId}<br>
+                Fecha: ${fecha}<br>
+                Estado: ${t.estado}<br><br>
+                <button onclick="eliminarTurno(${t.id})">Eliminar</button>
+            `;
+
+            lista.appendChild(li);
+        });
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+async function crearTurno() {
+    try {
+        const turno = {
+            pacienteId: parseInt(document.getElementById("pacienteId").value),
+            medicoId: parseInt(document.getElementById("medicoId").value),
+            especialidadId: parseInt(document.getElementById("especialidadId").value),
+            fechaHora: document.getElementById("fechaHora").value,
+            estado: document.getElementById("estado").value
+        };
+
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(turno)
+        });
+
+        if (!res.ok) throw new Error("Error al crear turno");
+
+        alert("Turno creado correctamente");
+
+        limpiarFormulario();
+        cargarTurnos();
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+async function eliminarTurno(id) {
+    try {
+        const res = await fetch(`${url}/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!res.ok) throw new Error("Error al eliminar");
+
+        cargarTurnos();
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+function limpiarFormulario() {
+    document.getElementById("pacienteId").value = "";
+    document.getElementById("medicoId").value = "";
+    document.getElementById("especialidadId").value = "";
+    document.getElementById("fechaHora").value = "";
+    document.getElementById("estado").value = "";
+}
+</script>
+
+</body>
+</html>

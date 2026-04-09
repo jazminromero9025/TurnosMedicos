@@ -26,10 +26,7 @@ namespace Turnos.Infraestructura
 
         public DbSet<Especialidad> Especialidad { get; set; }
 
-       
 
-
-
-
-    }
+        
+}
 }
